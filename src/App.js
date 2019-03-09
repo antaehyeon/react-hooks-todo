@@ -5,6 +5,7 @@ import List from "./List";
 const App = () => {
   const [todoInputData, setTodoInputData] = useState();
   const [todos, setTodos] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   const handleTodoInputText = e => {
     setTodoInputData(e.target.value);
@@ -15,9 +16,21 @@ const App = () => {
     setTodos([...todos, todoInputData]);
   };
 
+  const fetchInitialData = async () => {
+    setLoading(true);
+    const response = await fetch("http://localhost:8080/todo");
+    const initialData = await response.json();
+    setTodos([...todos, ...initialData]);
+    setLoading(false);
+  };
+
   useEffect(() => {
-    console.log("USE EFFECT - REACT HOOKS");
+    console.log("USE EFFECT - REACT HOOKS", todos);
   }, [todos]);
+
+  useEffect(() => {
+    fetchInitialData();
+  }, []);
 
   return (
     <>
@@ -27,7 +40,7 @@ const App = () => {
         <button onClick={addTodo}>할일 추가</button>
       </form>
 
-      <List todos={todos} />
+      <List todos={todos} loading={loading} />
     </>
   );
 };
