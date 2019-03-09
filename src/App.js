@@ -1,20 +1,23 @@
-import React, { Component, useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./App.css";
 import List from "./List";
 
 const App = () => {
-  const [inputText, setInputText] = useState();
+  const [todoInputData, setTodoInputData] = useState();
   const [todos, setTodos] = useState([]);
 
   const handleTodoInputText = e => {
-    console.log("todoInputTextHandler e-value", e.target.value);
-    setInputText(e.target.value);
+    setTodoInputData(e.target.value);
   };
 
   const addTodo = e => {
     e.preventDefault();
-    setTodos([...todos, inputText]);
+    setTodos([...todos, todoInputData]);
   };
+
+  useEffect(() => {
+    console.log("USE EFFECT - REACT HOOKS");
+  }, [todos]);
 
   return (
     <>
