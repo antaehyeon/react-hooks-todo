@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./App.css";
 import List from "./List";
 import useFetch from "./useFetch";
+import Header from "./Header";
 
 const App = () => {
   const [todoInputData, setTodoInputData] = useState();
@@ -30,7 +31,7 @@ const App = () => {
 
   return (
     <>
-      <h1>-TODO APPLICATIONS-</h1>
+      <Header todos={todos} />
       <form action="">
         <input type="text" name="" onChange={handleTodoInputText} />
         <button onClick={addTodo}>할일 추가</button>
