@@ -1,24 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./App.css";
 import List from "./List";
-
-const useFetch = (callback, url) => {
-  const [loading, setLoading] = useState(false);
-
-  const fetchInitialData = async () => {
-    setLoading(true);
-    const response = await fetch(url);
-    const initialData = await response.json();
-    callback(initialData);
-    setLoading(false);
-  };
-
-  useEffect(() => {
-    fetchInitialData();
-  }, []);
-
-  return loading;
-};
+import useFetch from "./useFetch";
 
 const App = () => {
   const [todoInputData, setTodoInputData] = useState();
@@ -44,8 +27,6 @@ const App = () => {
   useEffect(() => {
     console.log("USE EFFECT - REACT HOOKS", todos);
   }, [todos]);
-
-  useEffect(() => {}, []);
 
   return (
     <>
