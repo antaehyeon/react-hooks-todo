@@ -1,10 +1,10 @@
 import React from "react";
 import "./Item.css";
 
-const Item = ({ todo, changeTodoStatus }) => {
+const Item = ({ todo, dispatch }) => {
   const toggleItem = e => {
     const id = e.target.dataset.id;
-    changeTodoStatus(id);
+    dispatch({ type: "CHANGE_TODO_STATUS", payload: id });
   };
 
   return (
