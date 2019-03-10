@@ -8,24 +8,17 @@ import Form from "./Form";
 export const TodoContext = React.createContext();
 
 const TodoStore = () => {
-  const [todoInputData, setTodoInputData] = useState();
   const [todos, setTodos] = useState([]);
   const loading = useFetch(setTodos, "http://localhost:8080/todo");
 
-  const handleTodoInputText = e => {
-    setTodoInputData(e.target.value);
-  };
-
-  const addTodo = e => {
-    e.preventDefault();
-
-    const newTodo = {
+  const addTodo = newTodo => {
+    const newTodoData = {
       id: todos.length + 1,
-      title: todoInputData,
+      title: newTodo,
       status: "todo"
     };
 
-    setTodos([...todos, newTodo]);
+    setTodos([...todos, newTodoData]);
   };
 
   const changeTodoStatus = id => {
@@ -36,7 +29,7 @@ const TodoStore = () => {
       return todo;
     });
 
-    setTodoInputData(updateTodos);
+    setTodos(updateTodos);
   };
 
   useEffect(() => {
@@ -44,9 +37,7 @@ const TodoStore = () => {
   }, [todos]);
 
   return (
-    <TodoContext.Provider
-      value={{ todos, handleTodoInputText, addTodo, loading, changeTodoStatus }}
-    >
+    <TodoContext.Provider value={{ todos, addTodo, loading, changeTodoStatus }}>
       <Header />
       <Form />
       <List />
