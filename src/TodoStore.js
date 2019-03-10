@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import "./App.css";
+import "./TodoStore.css";
 import List from "./List";
 import useFetch from "./useFetch";
 import Header from "./Header";
@@ -7,7 +7,7 @@ import Form from "./Form";
 
 export const TodoContext = React.createContext();
 
-const App = () => {
+const TodoStore = () => {
   const [todoInputData, setTodoInputData] = useState();
   const [todos, setTodos] = useState([]);
   const loading = useFetch(setTodos, "http://localhost:8080/todo");
@@ -44,16 +44,14 @@ const App = () => {
   }, [todos]);
 
   return (
-    <TodoContext.Provider value={{ todos }}>
+    <TodoContext.Provider
+      value={{ todos, handleTodoInputText, addTodo, loading, changeTodoStatus }}
+    >
       <Header />
-      <Form addTodo={addTodo} handleTodoInputText={handleTodoInputText} />
-      <List
-        todos={todos}
-        loading={loading}
-        changeTodoStatus={changeTodoStatus}
-      />
+      <Form />
+      <List />
     </TodoContext.Provider>
   );
 };
 
-export default App;
+export default TodoStore;
