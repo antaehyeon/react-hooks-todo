@@ -25,6 +25,17 @@ const App = () => {
     setTodos([...todos, newTodo]);
   };
 
+  const changeTodoStatus = id => {
+    const updateTodos = todos.map(todo => {
+      if (todo.id !== +id) return todo;
+      if (todo.status === "todo") todo.status = "done";
+      else todo.status = "todo";
+      return todo;
+    });
+
+    setTodoInputData(updateTodos);
+  };
+
   useEffect(() => {
     console.log("USE EFFECT - REACT HOOKS", todos);
   }, [todos]);
@@ -37,7 +48,11 @@ const App = () => {
         <button onClick={addTodo}>할일 추가</button>
       </form>
 
-      <List todos={todos} loading={loading} />
+      <List
+        todos={todos}
+        loading={loading}
+        changeTodoStatus={changeTodoStatus}
+      />
     </>
   );
 };
