@@ -2,10 +2,28 @@ import React, { useState, useEffect } from "react";
 import "./App.css";
 import List from "./List";
 
+const useFetch = (callback, url) => {
+  const [loading, setLoading] = useState(false);
+
+  const fetchInitialData = async () => {
+    setLoading(true);
+    const response = await fetch(url);
+    const initialData = await response.json();
+    callback(initialData);
+    setLoading(false);
+  };
+
+  useEffect(() => {
+    fetchInitialData();
+  }, []);
+
+  return loading;
+};
+
 const App = () => {
   const [todoInputData, setTodoInputData] = useState();
   const [todos, setTodos] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const loading = useFetch(setTodos, "http://localhost:8080/todo");
 
   const handleTodoInputText = e => {
     setTodoInputData(e.target.value);
@@ -13,24 +31,21 @@ const App = () => {
 
   const addTodo = e => {
     e.preventDefault();
-    setTodos([...todos, todoInputData]);
-  };
 
-  const fetchInitialData = async () => {
-    setLoading(true);
-    const response = await fetch("http://localhost:8080/todo");
-    const initialData = await response.json();
-    setTodos([...todos, ...initialData]);
-    setLoading(false);
+    const newTodo = {
+      id: todos.length + 1,
+      title: todoInputData,
+      status: "todo"
+    };
+
+    setTodos([...todos, newTodo]);
   };
 
   useEffect(() => {
     console.log("USE EFFECT - REACT HOOKS", todos);
   }, [todos]);
 
-  useEffect(() => {
-    fetchInitialData();
-  }, []);
+  useEffect(() => {}, []);
 
   return (
     <>
