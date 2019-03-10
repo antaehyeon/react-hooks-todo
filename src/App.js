@@ -3,6 +3,9 @@ import "./App.css";
 import List from "./List";
 import useFetch from "./useFetch";
 import Header from "./Header";
+import Form from "./Form";
+
+export const TodoContext = React.createContext();
 
 const App = () => {
   const [todoInputData, setTodoInputData] = useState();
@@ -41,19 +44,15 @@ const App = () => {
   }, [todos]);
 
   return (
-    <>
-      <Header todos={todos} />
-      <form action="">
-        <input type="text" name="" onChange={handleTodoInputText} />
-        <button onClick={addTodo}>할일 추가</button>
-      </form>
-
+    <TodoContext.Provider value={{ todos }}>
+      <Header />
+      <Form addTodo={addTodo} handleTodoInputText={handleTodoInputText} />
       <List
         todos={todos}
         loading={loading}
         changeTodoStatus={changeTodoStatus}
       />
-    </>
+    </TodoContext.Provider>
   );
 };
 
