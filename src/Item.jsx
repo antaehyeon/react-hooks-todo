@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useContext } from "react";
 import "./Item.css";
+import { TodoContext } from "./TodoStore";
 
-const Item = ({ todo, dispatch }) => {
+const Item = ({ todo }) => {
+  const { dispatch } = useContext(TodoContext);
   const toggleItem = e => {
     const id = e.target.dataset.id;
     dispatch({ type: "CHANGE_TODO_STATUS", payload: id });

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useReducer } from "react";
+import React, { useEffect, useReducer } from "react";
 import "./TodoStore.css";
 import List from "./List";
 import useFetch from "./useFetch";
